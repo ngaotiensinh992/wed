@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="HandheldFriendly" content="true">
+  <title>68GB Sicbo Tool</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
+  <style>
+    :root {
+      --primary-color: #6366f1;
+      --secondary-color: #8b5cf6;
+      --accent-color: #a78bfa;
+      --light-color: rgba(255, 255, 255, 0.9);
+      --dark-color: #1e293b;
+      --success-color: #10b981;
+      --error-color: #ef4444;
+      --warning-color: #f59e0b;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      font-family: 'Inter', sans-serif;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: url('https://i.postimg.cc/zBdp8cnC/desktop-wallpaper-sakura-stunning-sakura-night.jpg') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      touch-action: manipulation;
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    /* Particle Canvas */
+    #particleCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      background: rgba(0, 0, 0, 0.4);
+    }
+    
+    /* Main Container */
+    .main-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Iframe Container */
+    #iframeContainer {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    #gameIframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Robot Prediction Container */
+    #robotContainer {
+      position: fixed;
+      top: 50%;
+      left: 20px;
+      transform: translateY(-50%);
+      z-index: 9999;
+    }
+
+    #robotInner {
+      display: flex;
+      align-items: center;
+      transform: rotate(90deg);
+      transform-origin: left center;
+    }
+
+    #robotIcon {
+      width: 130px;
+      height: 130px;
+      margin-right: 8px;
+      cursor: move;
+    }
+
+    #robotText {
+      background: rgba(50, 50, 50, 0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.4;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+      white-space: nowrap;
+      max-width: 200px;
+      position: relative;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    #robotText #line1 {
+      font-size: 15px;
+      color: #fff;
+      margin-bottom: 3px;
+    }
+
+    #robotText #line2 {
+      font-size: 14px;
+      color: #ffd700;
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+
+    #robotText #line3 {
+      font-size: 13px;
+      color: #a78bfa;
+    }
+
+    /* Rotate Button */
+    #rotateRobotBtn {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    #rotateRobotBtn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
+
+    /* Back Button */
+    #backBtn {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      background: rgba(239, 68, 68, 0.8);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      font-size: 14px;
+      cursor: pointer;
+      z-index: 1002;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 8px rgba(239, 68, 68, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    #backBtn:hover {
+      background: rgba(239, 68, 68, 1);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 12px rgba(239, 68, 68, 0.4);
+    }
+
+    /* Loading Overlay */
+    #loadingOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--primary-color);
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Alert Box */
+    .alert-box {
+      position: fixed;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.95);
+      padding: 8px 14px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      max-width: 90%;
+      color: var(--dark-color);
+      font-size: 12px;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translate(-50%, -15px);
+      }
+      to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
+    
+    .alert-box i {
+      margin-right: 6px;
+      font-size: 14px;
+    }
+
+    .alert-box.success {
+      background: rgba(16, 185, 129, 0.9);
+      color: white;
+    }
+
+    .alert-box.error {
+      background: rgba(239, 68, 68, 0.9);
+      color: white;
+    }
+
+    .alert-box.warning {
+      background: rgba(245, 158, 11, 0.9);
+      color: white;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      #robotContainer {
+        left: 8px;
+      }
+      
+      #robotIcon {
+        width: 100px;
+        height: 100px;
+      }
+      
+      #robotText {
+        font-size: 12px;
+        padding: 6px 10px;
+        max-width: 160px;
+      }
+      
+      #robotText #line1 {
+        font-size: 13px;
+      }
+      
+      #robotText #line2 {
+        font-size: 12px;
+      }
+      
+      #robotText #line3 {
+        font-size: 11px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Particle Background -->
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Iframe Container -->
+    <div id="iframeContainer">
+      <iframe id="gameIframe" src="https://68gb2024.ink/?code=17171422" allowfullscreen></iframe>
+    </div>
+  </div>
+  
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay">
+    <div class="loading-spinner"></div>
+  </div>
+  
+  <!-- Robot Prediction with Lottie Animation -->
+  <div id="robotContainer">
+    <div id="robotInner">
+      <dotlottie-player 
+        id="robotIcon" 
+        src="https://lottie.host/55ab9688-9a63-4f35-93f8-b40bd7fb8058/4n00MLJLZk.lottie" 
+        background="transparent" 
+        speed="1" 
+        loop 
+        autoplay>
+      </dotlottie-player>
+      <div id="robotText">
+        <div id="line1">#...: ...</div>
+        <div id="line2">Vị: ...</div>
+        <div id="line3">Độ tin cậy: ...%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rotate Robot Button -->
+  <button id="rotateRobotBtn" onclick="rotateRobot()">
+    <i class="fas fa-sync-alt"></i>
+  </button>
+
+  <!-- Back Button -->
+  <button id="backBtn" onclick="goBack()">
+    <i class="fas fa-arrow-left"></i>
+  </button>
+
+  <script>
+    // Global variables
+    let currentPhien = null;
+    let lastPhienTime = 0;
+    let predictionInterval = null;
+    let robotRotation = 90; // Default rotation
+    
+    // Current prediction data that stays fixed until phien changes
+    let currentPrediction = {
+      du_doan: "...",
+      dudoan_vi: "...",
+      do_tin_cay: "..."
+    };
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize particle background
+      initParticles();
+      
+      // Start fetching prediction data
+      startPrediction();
+      
+      // Hide loading after 2 seconds
+      setTimeout(() => {
+        document.getElementById('loadingOverlay').style.display = 'none';
+      }, 2000);
+      
+      // Initialize robot drag
+      initRobotDrag();
+    });
+
+    // Particle Background
+    function initParticles() {
+      const canvas = document.getElementById('particleCanvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const particles = [];
+      const particleCount = window.innerWidth < 768 ? 30 : 80;
+
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 3 + 1,
+          speedX: Math.random() * 1 - 0.5,
+          speedY: Math.random() * 1 - 0.5,
+          color: `rgba(${Math.floor(Math.random() * 100 + 155)}, ${Math.floor(Math.random() * 100 + 155)}, 255, ${Math.random() * 0.5 + 0.1})`
+        });
+      }
+
+      function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        particles.forEach(particle => {
+          ctx.beginPath();
+          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+          ctx.fillStyle = particle.color;
+          ctx.fill();
+          
+          particle.x += particle.speedX;
+          particle.y += particle.speedY;
+          
+          if (particle.x > canvas.width || particle.x < 0) particle.speedX *= -1;
+          if (particle.y > canvas.height || particle.y < 0) particle.speedY *= -1;
+        });
+      
+        requestAnimationFrame(animateParticles);
+      }
+
+      animateParticles();
+
+      window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+    }
+
+    // Initialize robot drag functionality
+    function initRobotDrag() {
+      const robotContainer = document.getElementById('robotContainer');
+      const robotIcon = document.getElementById('robotIcon');
+      
+      let isDragging = false;
+      let offsetX, offsetY;
+      
+      // Mouse events
+      robotIcon.addEventListener('mousedown', function(e) {
+        isDragging = true;
+        const rect = robotContainer.getBoundingClientRect();
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
+        e.preventDefault();
+      });
+      
+      document.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+        
+        robotContainer.style.left = (e.clientX - offsetX) + 'px';
+        robotContainer.style.top = (e.clientY - offsetY) + 'px';
+        robotContainer.style.transform = 'none';
+        e.preventDefault();
+      });
+      
+      document.addEventListener('mouseup', function() {
+        isDragging = false;
+      });
+      
+      // Touch events
+      robotIcon.addEventListener('touchstart', function(e) {
+        isDragging = true;
+        const touch = e.touches[0];
+        const rect = robotContainer.getBoundingClientRect();
+        offsetX = touch.clientX - rect.left;
+        offsetY = touch.clientY - rect.top;
+        e.preventDefault();
+      });
+      
+      document.addEventListener('touchmove', function(e) {
+        if (!isDragging) return;
+        const touch = e.touches[0];
+        robotContainer.style.left = (touch.clientX - offsetX) + 'px';
+        robotContainer.style.top = (touch.clientY - offsetY) + 'px';
+        robotContainer.style.transform = 'none';
+        e.preventDefault();
+      });
+      
+      document.addEventListener('touchend', function() {
+        isDragging = false;
+      });
+    }
+
+    // Rotate robot function
+    function rotateRobot() {
+      robotRotation += 90;
+      if (robotRotation >= 360) robotRotation = 0;
+      document.getElementById('robotInner').style.transform = `rotate(${robotRotation}deg)`;
+      document.getElementById('robotInner').style.transformOrigin = 'left center';
+    }
+
+    // Fetch prediction data from API
+    async function fetchPredictionData() {
+      try {
+        const response = await fetch('/api/api68sic.php');
+
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Validate the response structure
+        if (!data.phien_hien_tai || !data.du_doan || !data.dudoan_vi || !data.do_tin_cay) {
+          throw new Error('Invalid API response structure');
+        }
+        
+        return data;
+      } catch (error) {
+        console.error('Error fetching prediction:', error);
+        showAlert("Lỗi kết nối đến server!", 'error');
+        return null;
+      }
+    }
+
+    // Start prediction interval
+    function startPrediction() {
+      if (predictionInterval) {
+        clearInterval(predictionInterval);
+      }
+      
+      // Initial fetch
+      updatePrediction();
+      
+      // Set interval for updates (every 2 seconds)
+      predictionInterval = setInterval(updatePrediction, 2000);
+    }
+
+    // Update prediction display
+    async function updatePrediction() {
+      const prediction = await fetchPredictionData();
+      if (!prediction) return;
+
+      // Check if phien has changed
+      if (prediction.phien_hien_tai !== currentPhien) {
+        currentPhien = prediction.phien_hien_tai;
+        lastPhienTime = Date.now();
+        
+        // Update current prediction with the new data
+        currentPrediction = {
+          du_doan: prediction.du_doan,
+          dudoan_vi: prediction.dudoan_vi,
+          do_tin_cay: prediction.do_tin_cay
+        };
+      }
+
+      const delay = Date.now() - lastPhienTime;
+      
+      // Don't show prediction if it's too close to the phien start (10 seconds)
+      if (delay < 10000) {
+        document.getElementById("line1").innerHTML = `#${prediction.phien_hien_tai}: ...`;
+        document.getElementById("line2").innerHTML = `Vị: ...`;
+        document.getElementById("line3").innerHTML = `Độ tin cậy: ...%`;
+        return;
+      }
+
+      // Update robot text with the current prediction data
+      document.getElementById("line1").innerHTML = `#${prediction.phien_hien_tai}: ${currentPrediction.du_doan}`;
+      document.getElementById("line2").innerHTML = `Vị: ${currentPrediction.dudoan_vi}`;
+      document.getElementById("line3").innerHTML = `Độ tin cậy: ${currentPrediction.do_tin_cay}%`;
+    }
+
+    // Show alert message
+    function showAlert(message, type = 'error') {
+      const alertBox = document.createElement('div');
+      alertBox.className = `alert-box ${type}`;
+      alertBox.innerHTML = `
+        <i class="fas ${type === 'error' ? 'fa-exclamation-circle' : type === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'}"></i>
+        <span>${message}</span>
+      `;
+      
+      document.body.appendChild(alertBox);
+      
+      setTimeout(() => {
+        alertBox.style.opacity = '0';
+        setTimeout(() => alertBox.remove(), 300);
+      }, 3000);
+    }
+
+    // Go back function
+    function goBack() {
+      window.history.back();
+    }
+    // ==========================
+// 🔐 KIỂM TRA KEY ĐỊNH KỲ 5 PHÚT/LẦN
+// ==========================
+(function() {
+  const CHECK_INTERVAL = 5 * 60 * 1000; // 5 phút
+  const API_URL = "https://hoangphuc68.site/keys.php";
+
+  async function checkKeyStatus() {
+    const key = localStorage.getItem("tool_key");
+    const device = localStorage.getItem("device_id");
+    if (!key) {
+      window.location.href = "/index.html";
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API_URL}?key=${encodeURIComponent(key)}&device_id=${encodeURIComponent(device)}`, {
+        method: "GET",
+        headers: { "Cache-Control": "no-cache" }
+      });
+      const data = await res.json();
+
+      if (data.status !== "success") {
+        showAlert("🔒 Key của bạn đã hết hạn. Liên hệ Admin Hoàng Phúc để gia hạn.", "error");
+        localStorage.removeItem("tool_key");
+        localStorage.removeItem("device_id");
+        setTimeout(() => {
+          window.location.href = "/index.html";
+        }, 2000);
+      }
+    } catch (err) {
+      console.warn("⚠️ Lỗi khi kiểm tra key:", err);
+    }
+  }
+
+  setInterval(checkKeyStatus, CHECK_INTERVAL);
+  checkKeyStatus();
+})();
+
+</script>
+</body>
+</html>

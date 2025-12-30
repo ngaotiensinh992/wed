@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dự Đoán HITCLUB</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      background: #0c1a2a;
+      font-family: Arial, sans-serif;
+      color: white;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .wrapper {
+      max-width: 400px;
+      margin: auto;
+      background: #001a33;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #00ff00;
+    }
+
+    h2 {
+      text-align: center;
+      color: #00ccff;
+      margin-bottom: 10px;
+    }
+
+    .circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid #00aaff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 22px;
+      font-weight: bold;
+      margin: 15px auto;
+      background-color: black;
+    }
+
+    .status {
+      text-align: center;
+      color: #66ccff;
+      font-size: 14px;
+    }
+
+    .time {
+      text-align: center;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      font-size: 13px;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 6px;
+      text-align: center;
+      border-bottom: 1px solid #003366;
+    }
+
+    th {
+      background: #003f66;
+    }
+
+    .tai {
+      background: #00ff00;
+      color: #000;
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-weight: bold;
+    }
+
+    .xiu {
+      background: #ff3333;
+      color: #fff;
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-weight: bold;
+    }
+
+    .win {
+      color: #00ff00;
+      font-weight: bold;
+    }
+
+    .lose {
+      color: #ff3333;
+      font-weight: bold;
+    }
+
+    .pending {
+      color: #ccc;
+      font-style: italic;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #003366;
+      margin: 15px 0;
+    }
+
+    .title {
+      font-weight: bold;
+      margin: 5px 0;
+      text-align: center;
+    }
+
+    /* Đã xóa .session-info vì không còn dùng */
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h2>DỰ ĐOÁN HITCLUB</h2>
+
+    <!-- Đã xóa phần Phiên hiện tại và Phiên tiếp theo -->
+
+    <div class="circle" id="prediction">--</div>
+    <div class="status" id="status">ĐANG KẾT NỐI...</div>
+    <div class="time" id="clock">--:--:--</div>
+
+    <hr />
+    <div class="title">Lịch sử kết quả:</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Phiên</th>
+          <th>Dự đoán</th>
+          <th>Kết quả</th>
+          <th>Đánh giá</th>
+          <th>Thời gian</th>
+        </tr>
+      </thead>
+      <tbody id="history">
+        <!-- Kết quả sẽ thêm ở đây -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    const apiURL = "apii.php";
+    let historyData = [];
+
+    function formatTime(iso = null) {
+      const date = iso ? new Date(iso) : new Date();
+      return date.toLocaleTimeString('vi-VN');
+    }
+
+    function addRow(session, prediction, result, time) {
+      const row = document.createElement('tr');
+      let danhGia = '';
+      let predictionDisplay = '';
+      let resultDisplay = '';
+
+      // Xử lý hiển thị dự đoán
+      if (!prediction || prediction === 'Chưa dự đoán') {
+        predictionDisplay = '<span class="pending">Chưa dự đoán</span>';
+      } else {
+        predictionDisplay = prediction === 'Tài' 
+          ? `<span class="tai">${prediction}</span>` 
+          : `<span class="xiu">${prediction}</span>`;
+      }
+
+      // Xử lý hiển thị kết quả
+      if (!result || result === 'Chưa có kết quả') {
+        resultDisplay = '<span class="pending">--</span>';
+        danhGia = '<span class="pending">Chờ kết quả</span>';
+      } else {
+        resultDisplay = result === 'Tài' 
+          ? `<span class="tai">${result}</span>` 
+          : `<span class="xiu">${result}</span>`;
+
+        // Chỉ đánh giá nếu có cả dự đoán và kết quả
+        if (prediction && prediction !== 'Chưa dự đoán') {
+          danhGia = prediction === result 
+            ? '<span class="win">✔ Thắng</span>' 
+            : '<span class="lose">✘ Thua</span>';
+        } else {
+          danhGia = '<span class="pending">Không dự đoán</span>';
+        }
+      }
+
+      row.innerHTML = `
+        <td>${session}</td>
+        <td>${predictionDisplay}</td>
+        <td>${resultDisplay}</td>
+        <td>${danhGia}</td>
+        <td>${time}</td>
+      `;
+
+      const table = document.getElementById("history");
+      table.prepend(row);
+      if (table.rows.length > 10) table.deleteRow(10);
+    }
+
+    async function fetchData() {
+      try {
+        const res = await fetch(apiURL);
+        const data = await res.json();
+
+        // Bỏ hiển thị currentSession và nextSession
+
+        // Hiển thị dự đoán
+        document.getElementById("prediction").innerText = data.prediction || "--";
+        document.getElementById("status").innerText = "ĐÃ KẾT NỐI";
+
+        // Thêm vào lịch sử nếu có kết quả và chưa có trong history
+        if (data.current_result && !historyData.includes(data.current_session)) {
+          historyData.push(data.current_session);
+          addRow(
+            data.current_session,
+            data.prediction || "Chưa dự đoán",
+            data.current_result,
+            formatTime()
+          );
+        }
+
+      } catch (e) {
+        document.getElementById("status").innerText = "LỖI KẾT NỐI API";
+        console.error("Lỗi fetchData:", e);
+      }
+    }
+
+    function updateClock() {
+      const clockElem = document.getElementById("clock");
+      clockElem.innerText = formatTime();
+    }
+
+    // Chạy đồng hồ realtime mỗi giây
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Lấy dữ liệu API mỗi giây
+    setInterval(fetchData, 1000);
+    fetchData();
+  </script>
+</body>
+</html>

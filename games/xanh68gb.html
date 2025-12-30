@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, maximum-scale=1.0, user-scalable=no">
+<title>AI BÀN XANH 68GB</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+/* =======================
+   BIẾN DỄ TÙY CHỈNH KÍCH THƯỚC
+======================= */
+:root {
+  --box-width: 220px;      /* chiều rộng khung */
+  --box-height: 100px;     /* chiều cao khung */
+  --box-padding: 6px 10px; /* padding khung */
+  --btn-size: 50px;        /* nút Tài/Xỉu */
+  --logo-size: 100px;      /* logo */
+  --text-size: 16px;       /* chữ phiên */
+}
+
+/* =======================
+   STYLE KHUNG DỰ ĐOÁN
+======================= */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #ffffff;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#gameFrame {
+  width: 100%;
+  height: 100vh;
+  border: none;
+}
+
+#predictionBox {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  transform-origin: center center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(90deg,#08b0e4,#bd43db,#e44326,#e77e1c,#daba09);
+  border: 2px solid #ffffff;
+  border-radius: 18px;
+  padding: var(--box-padding);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  z-index: 9999;
+  cursor: grab;
+  will-change: transform;
+  flex-shrink: 0;
+  width: var(--box-width);
+  height: var(--box-height);
+  min-width: unset;
+  transition: transform 0.3s ease-in-out;
+  touch-action: none; 
+}
+
+#predictionBox.dragging { cursor: grabbing; transition: none; }
+
+#phienText {
+  font-size: var(--text-size);
+  font-weight: 700;
+  margin-bottom: 4px;
+  margin-left: -10px;
+  text-align: left;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+
+  -webkit-text-stroke: 0.5px rgba(0,0,0,0.25);
+  text-stroke: 0.5px rgba(0,0,0,0.25);
+
+  text-shadow: 0 0 3px rgba(0,0,0,0.35);
+}
+
+.prediction-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 8px;
+}
+
+.prediction-btn {
+  width: var(--btn-size);
+  height: var(--btn-size);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(var(--btn-size) / 4); /* font tỉ lệ với nút */
+  font-weight: 700;
+  color: white;
+  border: 2px solid #000;
+  transition: transform 0.2s ease-in-out;
+}
+
+.btn-tai {
+  background: #000000;                  /* nền đen */
+  color: #ffffff;                       /* chữ trắng */
+  border: 2px solid #2de200;            /* viền xanh đậm */
+
+  font-weight: 700;
+
+  -webkit-text-stroke: 1px rgba(0,0,0,0.4); /* viền chữ đen mờ */
+  text-stroke: 1px rgba(0,0,0,0.4);
+
+  text-shadow: 0 0 6px rgba(0,0,0,0.5);     /* bóng chữ dịu */
+}
+
+.btn-xiu {
+  background: #faf9f9;              /* nền nhạt */
+  color: #000000;                   /* chữ đen */
+  border: 2px solid #ff0000;        /* viền đỏ đậm */
+  font-weight: 700;
+  text-shadow: 
+    -0.5px -0.5px 0 #fff,  
+     0.5px -0.5px 0 #fff,
+    -0.5px  0.5px 0 #fff,
+     0.5px  0.5px 0 #fff;  /* viền trắng nhẹ */
+}
+
+
+.logo-center {
+  width: var(--logo-size);
+  height: var(--logo-size);
+  margin-top: -20px;
+  margin-right: 5px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+#closeBtn {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: transparent;
+  color: #000;                 /* màu đen mặc định */
+  border: none;
+  font-size: 20px;             /* to hơn */
+  font-weight: 900;            /* cực đậm */
+  cursor: pointer;
+  line-height: 1;
+  text-shadow: 0 0 6px rgb(252, 252, 252);  /* viền sáng đen nhạt */
+  transition: all 0.2s ease-in-out;
+}
+
+#closeBtn:hover {
+  color: red;                           /* khi hover đổi sang đỏ */
+  text-shadow: 
+    0 0 6px rgba(255,0,0,0.7),
+    0 0 12px rgba(255,0,0,0.8),
+    0 0 18px rgba(255,0,0,1);           /* glow đỏ */
+  transform: scale(1.1);                /* hơi phóng to khi hover */
+}
+
+/* Chữ phiên nháy cực mạnh */
+.phien-glow {
+  animation: phienGlowStrong 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes phienGlowStrong {
+  from {
+    text-shadow: 
+      0 0 6px rgba(47, 133, 245, 1),
+      0 0 12px rgba(53, 179, 238, 1),
+      0 0 18px rgba(34, 193, 241, 1);
+  }
+  to {
+    text-shadow: 
+      0 0 25px rgb(240, 227, 42,1),
+      0 0 40px rgba(241, 212, 47, 1),
+      0 0 60px rgba(220, 238, 55, 1);
+  }
+}
+
+/*Phóng to nút */
+.btn-pulse {
+  animation: btnPulse 1s ease-in-out infinite;
+}
+
+@keyframes btnPulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+
+/* Viền nháy xanh (Tài) */
+.box-tai {
+  animation: borderGlowTai 0.7s infinite alternate;
+}
+@keyframes borderGlowTai {
+  from { 
+    border: 3px solid rgba(34,197,94,0.8); 
+    box-shadow: 0 0 8px rgba(34,197,94,0.8),
+                0 0 15px rgba(34,255,120,0.9);
+  }
+  to   { 
+    border: 3px solid rgba(34,255,120,1); 
+    box-shadow: 0 0 12px rgba(34,255,120,1),
+                0 0 20px rgba(34,255,120,1);
+  }
+}
+
+/* Viền nháy đỏ (Xỉu) */
+.box-xiu {
+  animation: borderGlowXiu 0.7s infinite alternate;
+}
+@keyframes borderGlowXiu {
+  from { 
+    border: 3px solid rgba(239,68,68,0.8); 
+    box-shadow: 0 0 8px rgba(239,68,68,0.8),
+                0 0 15px rgba(255,50,50,0.9);
+  }
+  to   { 
+    border: 3px solid rgba(255,50,50,1); 
+    box-shadow: 0 0 12px rgba(255,50,50,1),
+                0 0 20px rgba(255,50,50,1);
+  }
+}
+
+
+/* Viền nháy trắng (chờ phiên) */
+.box-waiting {
+  animation: borderGlowWait 1s infinite alternate;
+}
+@keyframes borderGlowWait {
+  from { border: 2px solid rgba(255,255,255,0.6); box-shadow: 0 0 10px rgba(255,255,255,0.6); }
+  to   { border: 2px solid rgba(255,255,255,1);   box-shadow: 0 0 20px rgba(255,255,255,1); }
+}
+
+#rotateBtn {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 0 12px rgba(37,99,235,0.6);
+  z-index: 10000;
+  transition: background 0.2s;
+}
+
+.brand-text {
+  position: absolute;
+  bottom: 2px; /* sát mép dưới */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  font-weight: 700;
+  color: #e9e637;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+
+  /* ✅ Dùng hiệu ứng y hệt chữ phiên */
+  -webkit-text-stroke: 0.01px rgb(226, 55, 55);
+  text-stroke: 0.5px rgba(231, 16, 16, 0.25);
+  text-shadow:
+    0 0 6px rgba(47,133,245,1),
+    0 0 12px rgba(53,179,238,1),
+    0 0 18px rgba(34,193,241,1);
+
+  animation: phienGlowStrong 0.5s ease-in-out infinite alternate;
+}
+
+/* Giữ nguyên keyframe cũ của chữ phiên */
+@keyframes phienGlowStrong {
+  from {
+    text-shadow:
+      0 0 6px rgba(47,133,245,1),
+      0 0 12px rgba(53,179,238,1),
+      0 0 18px rgba(34,193,241,1);
+  }
+  to {
+    text-shadow:
+      0 0 25px rgb(240,227,42),
+      0 0 40px rgba(241,212,47,1),
+      0 0 60px rgba(220,238,55,1);
+  }
+}
+
+#rotateBtn:hover { background: #1d4ed8; }
+</style>
+</head>
+<body>
+
+<iframe id="gameFrame" src="https://68gbvn88.biz/?code=17171422"></iframe>
+
+<div id="predictionBox">
+  <button id="closeBtn">✕</button> <!-- THÊM NÚT X NÀY -->
+  <div id="phienText">#0</div>
+  <div class="prediction-row">
+    <div id="btnTai" class="prediction-btn btn-tai">Tài</div>
+    <img src="https://i.postimg.cc/TPVRZPXY/logo.png" alt="Logo" class="logo-center" />
+    <div id="btnXiu" class="prediction-btn btn-xiu">Xỉu</div>
+  </div>
+    <div class="brand-text">Hoàng Phúc 68</div>
+</div>
+
+<button id="rotateBtn">⟳ Xoay</button>
+
+<script>
+const box = document.getElementById("predictionBox");
+const phienText = document.getElementById("phienText");
+const btnTai = document.getElementById("btnTai");
+const btnXiu = document.getElementById("btnXiu");
+const rotateBtn = document.getElementById("rotateBtn");
+const closeBtn = document.getElementById("closeBtn");
+let robotRotation = 0;
+
+// Bật trạng thái chờ phiên ngay từ đầu
+box.classList.add("box-waiting");
+phienText.textContent = "⏳ Chờ Phiên Mới..."; 
+
+closeBtn.addEventListener("click", () => {
+  box.style.display = "none"; // ẩn khung dự đoán
+});
+
+// Lưu Device ID trong localStorage hoặc sinh mới
+let deviceId = localStorage.getItem('deviceId');
+if (!deviceId) {
+  deviceId = crypto.randomUUID(); // sinh ngẫu nhiên
+  localStorage.setItem('deviceId', deviceId);
+}
+
+// Lấy vị trí từ localStorage nếu có
+let savedPos = JSON.parse(localStorage.getItem('boxPosition') || '{"x":0,"y":0}');
+let translateX = savedPos.x, translateY = savedPos.y;
+let currentX = translateX, currentY = translateY;
+
+function showPrediction(phien, du_doan ) {
+  phienText.textContent = `✅ #${phien} ✅`;
+  phienText.classList.add("phien-glow"); // bật nháy sáng chữ phiên
+
+  // reset trạng thái cũ
+  btnTai.classList.remove("btn-pulse");
+  btnXiu.classList.remove("btn-pulse");
+  box.classList.remove("box-tai","box-xiu","box-waiting");
+
+  if(du_doan === "Tài"){
+    btnTai.classList.add("btn-pulse");
+    box.classList.add("box-tai");
+  } else if(du_doan === "Xỉu"){
+    btnXiu.classList.add("btn-pulse");
+    box.classList.add("box-xiu");
+  }
+}
+
+function endRound() {
+  // Giữ nguyên trạng thái dự đoán thêm 5 giây
+  setTimeout(() => {
+    // Sau 5 giây → chuyển sang trạng thái chờ
+    btnTai.classList.remove("btn-pulse");
+    btnXiu.classList.remove("btn-pulse");
+    phienText.classList.remove("phien-glow");
+    box.classList.remove("box-tai", "box-xiu");
+    box.classList.add("box-waiting");
+    phienText.textContent = "⏳ Chờ Phiên Mới...";
+
+    // Random 8–13 giây rồi mới gọi lại runRound()
+    const waitTime = (8 + Math.floor(Math.random() * 6)) * 1000;
+    setTimeout(runRound, waitTime);
+
+  }, 5000); // giữ trạng thái dự đoán thêm 5 giây
+}
+
+async function runRound() {
+  try {
+    const response = await fetch("/api/68hpapixanh.php");
+    const text = await response.text(); 
+    console.log("RAW API:", text);
+
+    let data;
+    try {
+      data = JSON.parse(text);
+      console.log("PARSED API:", data);
+    } catch (e) {
+      console.error("❌ JSON lỗi:", e);
+      phienText.textContent = "🚨 API không trả JSON chuẩn";
+      return;
+    }
+
+    if (data.status === 'error') {
+      phienText.textContent = "🚨 " + data.message;
+      box.classList.remove("box-tai","box-xiu");
+      box.classList.add("box-waiting");
+      setTimeout(runRound, 5000);
+      return;
+    }
+
+    // 👉 check trạng thái phiên
+    if (data.trang_thai === "ket_thuc") {
+      endRound(); // gọi hàm kết thúc phiên
+      return;
+    }
+
+    // Nếu phiên đang chạy thì hiển thị dự đoán
+    showPrediction(data.phien, data.du_doan);
+
+    // Lặp lại sau 5s
+    setTimeout(runRound, 5000);
+
+  } catch (err) {
+    console.error("❌ Lỗi API:", err);
+    phienText.textContent = "🚨 Lỗi Kết Nối API";
+    box.classList.remove("box-tai","box-xiu");
+    box.classList.add("box-waiting");
+    setTimeout(runRound, 5000);
+  }
+}
+
+// Xoay mượt
+function rotateRobot() { robotRotation = (robotRotation + 90) % 360; }
+rotateBtn.addEventListener("click", rotateRobot);
+
+// Drag chuẩn desktop + mobile
+let isDragging = false, startX = 0, startY = 0;
+function animate() {
+  box.style.transform = `translate(${currentX}px, ${currentY}px) rotate(${robotRotation}deg)`;
+  requestAnimationFrame(animate);
+}
+requestAnimationFrame(animate);
+
+function startDrag(e) {
+  e.preventDefault();
+  isDragging = true;
+  startX = e.type.startsWith("touch") ? e.touches[0].clientX : e.clientX;
+  startY = e.type.startsWith("touch") ? e.touches[0].clientY : e.clientY;
+  box.classList.add("dragging");
+}
+
+function dragMove(e) {
+  if (!isDragging) return;
+  e.preventDefault();
+  const clientX = e.type.startsWith("touch") ? e.touches[0].clientX : e.clientX;
+  const clientY = e.type.startsWith("touch") ? e.touches[0].clientY : e.clientY;
+  currentX = translateX + (clientX - startX);
+  currentY = translateY + (clientY - startY);
+}
+
+function endDrag() {
+  if (!isDragging) return;
+  isDragging = false;
+  box.classList.remove("dragging");
+  translateX = currentX;
+  translateY = currentY;
+  localStorage.setItem('boxPosition', JSON.stringify({x: translateX, y: translateY}));
+}
+
+box.addEventListener("mousedown", startDrag);
+document.addEventListener("mousemove", dragMove);
+document.addEventListener("mouseup", endDrag);
+box.addEventListener("touchstart", startDrag);
+document.addEventListener("touchmove", dragMove, { passive: false });
+document.addEventListener("touchend", endDrag);
+
+// Bắt đầu chạy vòng dự đoán thật
+runRound();
+
+// ==========================
+// 🔐 KIỂM TRA KEY ĐỊNH KỲ 5 PHÚT/LẦN
+// ==========================
+(function() {
+  const CHECK_INTERVAL = 5 * 60 * 1000; // 5 phút
+  const API_URL = "https://hoangphuc68.site/keys.php";
+
+  async function checkKeyStatus() {
+    // 🟢 Đổi "user_key" → "tool_key" để trùng với index.html
+    const key = localStorage.getItem("tool_key");
+    const device = localStorage.getItem("device_id");
+    if (!key) {
+      window.location.href = "/index.html";
+      return;
+    }
+
+    try {
+      const res = await fetch(`${API_URL}?key=${encodeURIComponent(key)}&device_id=${encodeURIComponent(device)}`, {
+        method: "GET",
+        headers: { "Cache-Control": "no-cache" }
+      });
+      const data = await res.json();
+
+      if (data.status !== "success") {
+        alert("🔒 Key của bạn đã hết hạn.\nVui lòng liên hệ Admin Hoàng Phúc để gia hạn.");
+        // 🟢 Xóa cùng tên key
+        localStorage.removeItem("tool_key");
+        localStorage.removeItem("device_id");
+        
+        // 🕐 Đợi 2 giây cho người dùng xem thông báo xong rồi mới chuyển
+        setTimeout(() => {
+            window.location.href = "/index.html";
+        }, 2000); // 2000ms = 2 giây
+      }
+    } catch (err) {
+      console.warn("⚠️ Lỗi khi kiểm tra key:", err);
+    }
+  }
+
+  setInterval(checkKeyStatus, CHECK_INTERVAL);
+  checkKeyStatus();
+})();
+</script>
+</body>
+</html>

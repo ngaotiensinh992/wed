@@ -1,628 +1,143 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="HandheldFriendly" content="true">
-  <title>Hoàng Phúc 68 - Chúc Mừng Năm Mới 2025</title>
-  <meta name="description" content="Hoàng Phúc 68 - Hệ sinh thái Game Bài Bàn Xanh, Sicbo, Baccarat. Chào mừng năm mới Ất Tỵ 2025.">
-
-  <!-- ✅ Logo favicon -->
-  <link rel="icon" href="https://i.postimg.cc/ZnNdvPzf/wedicon.png" type="image/png" sizes="256x256">
-  <link rel="apple-touch-icon" href="https://i.postimg.cc/ZnNdvPzf/wedicon.png" sizes="512x512">
-  <link rel="preload" href="https://i.postimg.cc/ZnNdvPzf/wedicon.png" as="image" type="image/png">
-
-  <!-- ✅ SEO Keywords -->
-  <meta name="keywords" content="Hoàng Phúc 68, HP68, Tết 2025, Bàn Xanh, Sicbo, Baccarat, MD5, tool AI">
-
-  <!-- Font & Icon -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Lottie Animation -->
-  <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
-  
-  <!-- ✅ Security Meta -->
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="Referrer-Policy" content="no-referrer-when-downgrade">
-
-  <style>
-    :root {
-      --primary-color: #e63946;
-      --secondary-color: #ffb703;
-      --accent-color: #fb8500;
-      --light-color: rgba(255, 255, 255, 0.95);
-      --dark-color: #1a1a1a;
-      --success-color: #2a9d8f;
-      --error-color: #d62828;
-      --warning-color: #f4a261;
-      --glass-blur: 15px;
-      --tet-red: #d90429;
-      --tet-gold: #ffcf33;
-    }
-    
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-      font-family: 'Montserrat', sans-serif;
-    }
-    
-    body {
-      background: #800000;
-      background-image: url('media/tet-bg.png');
-      background-size: cover;
-      background-position: center;
-      margin: 0;
-      touch-action: manipulation;
-      height: 100vh;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-    }
-
-    body::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.3);
-      z-index: 0;
-    }
-
-    /* Tet Decorations */
-    .tet-decoration {
-      position: fixed;
-      pointer-events: none;
-      z-index: 2;
-      animation: float 6s ease-in-out infinite;
-    }
-    .mai-branch { top: -20px; right: -20px; width: 350px; }
-    .dao-branch { top: -20px; left: -20px; width: 350px; transform: scaleX(-1); }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
-    #particleCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      pointer-events: none;
-    }
-    
-    .main-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      position: relative;
-      z-index: 10;
-    }
-
-    #gameMenu {
-      background: rgba(40, 0, 0, 0.7);
-      backdrop-filter: blur(var(--glass-blur));
-      -webkit-backdrop-filter: blur(var(--glass-blur));
-      border: 3px solid var(--tet-gold);
-      border-radius: 30px;
-      width: 380px;
-      color: #fff;
-      position: relative;
-      box-shadow: 0 0 50px rgba(255, 207, 51, 0.4), inset 0 0 20px rgba(255, 207, 51, 0.1);
-      padding: 30px;
-      display: flex;
-      flex-direction: column;
-      animation: zoomIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    @keyframes zoomIn {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    .header-box {
-      text-align: center;
-      margin-bottom: 25px;
-    }
-
-    .header-box h1 {
-      font-size: 32px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      background: linear-gradient(to bottom, #fff7ad 0%, #ffa700 50%, #ff5e00 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-      margin-bottom: 5px;
-    }
-
-    .header-box p {
-      font-size: 14px;
-      color: var(--tet-gold);
-      text-transform: uppercase;
-      font-weight: 600;
-      letter-spacing: 3px;
-    }
-
-    .intro-section {
-      background: linear-gradient(90deg, transparent, rgba(255, 207, 51, 0.2), transparent);
-      padding: 12px;
-      margin-bottom: 25px;
-      border-top: 1px solid rgba(255, 207, 51, 0.3);
-      border-bottom: 1px solid rgba(255, 207, 51, 0.3);
-    }
-
-    .intro-section p {
-      font-size: 14px;
-      color: #fff;
-      text-align: center;
-      font-weight: 600;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-    }
-
-    .game-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      margin-bottom: 30px;
-    }
-
-    .game-card {
-      position: relative;
-      cursor: pointer;
-      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    .game-icon {
-      width: 100%;
-      aspect-ratio: 1/1;
-      object-fit: contain;
-      border-radius: 22px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 2px solid rgba(255, 207, 51, 0.4);
-      padding: 12px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-    }
-
-    .game-card:hover {
-      transform: translateY(-10px) scale(1.08);
-    }
-
-    .game-card:hover .game-icon {
-      border-color: var(--tet-gold);
-      background: rgba(255, 207, 51, 0.1);
-      box-shadow: 0 15px 30px rgba(255, 207, 51, 0.3);
-    }
-
-    .game-label {
-      position: absolute;
-      bottom: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: linear-gradient(to bottom, var(--tet-red), #800000);
-      color: white;
-      font-size: 11px;
-      padding: 4px 12px;
-      border-radius: 12px;
-      white-space: nowrap;
-      font-weight: 800;
-      border: 1px solid var(--tet-gold);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    }
-
-    .action-buttons {
-      display: flex;
-      gap: 15px;
-      margin-top: auto;
-    }
-
-    .action-btn {
-      flex: 1;
-      padding: 14px;
-      border-radius: 15px;
-      border: none;
-      font-weight: 800;
-      font-size: 15px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      transition: all 0.3s ease;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .pricing-btn {
-      background: linear-gradient(to bottom, #ffd700, #b8860b);
-      color: #4a0000;
-      box-shadow: 0 4px 0 #8b4513, 0 6px 15px rgba(184, 134, 11, 0.4);
-    }
-
-    .contact-btn {
-      background: linear-gradient(to bottom, #ff4d4d, #b30000);
-      color: white;
-      box-shadow: 0 4px 0 #660000, 0 6px 15px rgba(179, 0, 0, 0.4);
-    }
-
-    .action-btn:hover {
-      transform: translateY(-2px);
-      filter: brightness(1.1);
-    }
-
-    .action-btn:active {
-      transform: translateY(2px);
-      box-shadow: none;
-    }
-
-    /* Red Envelope Animation */
-    @keyframes drop {
-      0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
-      20% { opacity: 1; }
-      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-    }
-
-    .red-envelope {
-      position: fixed;
-      font-size: 24px;
-      pointer-events: none;
-      z-index: 5;
-      animation: drop linear infinite;
-    }
-
-    /* Robot Tet Style */
-    #robotContainer {
-      position: fixed;
-      top: 50%;
-      left: 20px;
-      z-index: 1000;
-      cursor: move;
-    }
-    #robotInner {
-      background: rgba(60, 0, 0, 0.8);
-      border: 2px solid var(--tet-gold);
-      border-radius: 15px;
-      padding: 10px;
-      display: flex;
-      align-items: center;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-    }
-    #robotText {
-      color: var(--tet-gold);
-      margin-left: 10px;
-      font-weight: 700;
-      font-size: 14px;
-    }
-
-    /* Form Tết */
-    .login-container {
-      background: rgba(40, 0, 0, 0.95);
-      border: 3px solid var(--tet-gold);
-      border-radius: 30px;
-      padding: 30px;
-      box-shadow: 0 0 50px rgba(0,0,0,0.8);
-    }
-    
-    input {
-      background: rgba(255,255,255,0.1) !important;
-      border: 1px solid var(--tet-gold) !important;
-      color: white !important;
-      border-radius: 12px !important;
-      padding: 12px !important;
-    }
-
-    .menu-container {
-      background: rgba(20, 0, 0, 0.98);
-      border-left: 3px solid var(--tet-gold);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hoàng Phúc 68 - Chúc Mừng Năm Mới 2025</title>
+    <link rel="icon" href="https://i.postimg.cc/ZnNdvPzf/wedicon.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --tet-red: #d90429;
+            --tet-gold: #ffcf33;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; }
+        body {
+            background-image: url('media/tet-bg.png');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        #envelopeContainer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+        .falling-icon { position: absolute; animation: fall linear infinite; }
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        .main-card {
+            background: rgba(40, 0, 0, 0.8);
+            border: 2px solid var(--tet-gold);
+            border-radius: 20px;
+            width: 340px;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            z-index: 10;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        .header h1 { font-size: 24px; color: var(--tet-gold); margin-bottom: 5px; }
+        .header p { font-size: 12px; text-transform: uppercase; margin-bottom: 15px; }
+        .intro { background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; margin-bottom: 15px; font-size: 13px; }
+        .game-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .game-item { cursor: pointer; transition: 0.3s; }
+        .game-item:hover { transform: scale(1.05); }
+        .game-item img { width: 100%; border-radius: 15px; border: 1px solid var(--tet-gold); }
+        .game-item span { display: block; margin-top: 5px; font-size: 11px; font-weight: bold; }
+        .actions { display: flex; gap: 10px; }
+        .btn { flex: 1; padding: 10px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; font-size: 13px; color: white; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .btn-gold { background: linear-gradient(to bottom, #ffd700, #b8860b); color: #4a0000; }
+        .btn-red { background: linear-gradient(to bottom, #ff4d4d, #b30000); }
+        
+        #robotContainer { position: fixed; top: 50%; left: 20px; transform: translateY(-50%); z-index: 20; cursor: move; display: flex; align-items: center; background: rgba(0,0,0,0.6); padding: 5px 10px; border-radius: 10px; border: 1px solid var(--tet-gold); }
+        #robotIcon { width: 40px; height: 40px; margin-right: 10px; }
+        #robotText { font-size: 12px; font-weight: bold; color: var(--tet-gold); }
+    </style>
 </head>
 <body>
-  <!-- Lì xì rơi -->
-  <div id="envelopeContainer"></div>
-  
-  <!-- Cành mai cành đào -->
-  <img src="https://i.postimg.cc/mD8VvK0G/apricot-blossom.png" class="tet-decoration mai-branch" alt="Apricot">
-  <img src="https://i.postimg.cc/Ssd59YhD/peach-blossom.png" class="tet-decoration dao-branch" alt="Peach">
-
-  <canvas id="particleCanvas"></canvas>
-
-  <div class="main-container">
-    <div id="gameMenu">
-      <div class="header-box">
-        <h1>HOÀNG PHÚC 68</h1>
-        <p>CHÚC MỪNG NĂM MỚI 2025</p>
-      </div>
-
-      <div class="intro-section">
-        <p>🧧 KHAI XUÂN NHƯ Ý - ĐÁNH ĐÂU THẮNG ĐÓ 🧧</p>
-      </div>
-
-      <div class="game-grid">
-        <div class="game-card" onclick="selectGame('68banxanh')">
-          <img src="media/xanhlogo5.png" class="game-icon" alt="68 Game Bài Bàn Xanh">
-          <span class="game-label">BÀN XANH</span>
-        </div>
-        <div class="game-card" onclick="selectGame('68gb')">
-          <img src="media/md5logo.png" class="game-icon" alt="68 Game Bài MD5">
-          <span class="game-label">MD5</span>
-        </div>
-        <div class="game-card" onclick="selectGame('68sicbo')">
-          <img src="media/logo68.png" class="game-icon" alt="68 Sicbo">
-          <span class="game-label">SICBO</span>
-        </div>
-        <div class="game-card" onclick="selectGame('BCR')">
-          <img src="media/bcr.png" class="game-icon" alt="Bacarat Sexy">
-          <span class="game-label">BACCARAT</span>
-        </div>
-      </div>
-
-      <div class="action-buttons">
-        <button class="action-btn pricing-btn" onclick="toggleMenu()">
-          <i class="fas fa-tags"></i> BẢNG GIÁ
-        </button>
-        <button class="action-btn contact-btn" onclick="window.open('https://t.me/PhucTheTu3779', '_blank')">
-          <i class="fab fa-telegram"></i> HỖ TRỢ
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    function createEnvelope() {
-      const container = document.getElementById('envelopeContainer');
-      const e = document.createElement('div');
-      e.className = 'red-envelope';
-      const symbols = ['🧧', '🌸', '🌼', '💰', '🏮'];
-      e.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
-      e.style.left = Math.random() * 100 + 'vw';
-      e.style.animationDuration = (Math.random() * 4 + 3) + 's';
-      e.style.fontSize = (Math.random() * 10 + 20) + 'px';
-      container.appendChild(e);
-      setTimeout(() => e.remove(), 7000);
-    }
-    setInterval(createEnvelope, 400);
-
-    const canvas = document.getElementById('particleCanvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    class Particle {
-      constructor() {
-        this.reset();
-      }
-      reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.8;
-        this.vy = (Math.random() - 0.5) * 0.8;
-        this.size = Math.random() * 2.5;
-        this.color = Math.random() > 0.5 ? '#ffcf33' : '#ff4d4d';
-        this.alpha = Math.random();
-      }
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
-      }
-      draw() {
-        ctx.globalAlpha = this.alpha;
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.globalAlpha = 1;
-      }
-    }
-
-    for(let i=0; i<80; i++) particles.push(new Particle());
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => {
-        p.update();
-        p.draw();
-      });
-      requestAnimationFrame(animate);
-    }
-    animate();
-  </script>
-      <div id="robotContainer" onmousedown="dragStart(event)" ontouchstart="dragStart(event)" style="position: fixed; top: 50%; left: 20px; z-index: 1000; cursor: move;">
-        <div id="robotInner" style="background: rgba(60, 0, 0, 0.8); border: 2px solid var(--tet-gold); border-radius: 15px; padding: 10px; display: flex; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.5);">
-          <img src="media/xanhlogo5.png" id="robotIcon" alt="Robot AI" style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid var(--tet-gold);">
-          <div id="robotText" style="color: var(--tet-gold); margin-left: 10px; font-weight: 700; font-size: 14px;">
+    <div id="envelopeContainer"></div>
+    <div id="robotContainer" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
+        <img src="media/xanhlogo5.png" id="robotIcon" alt="Robot">
+        <div id="robotText">
             <div id="line1">ĐANG CHỜ...</div>
             <div id="line2">BẮT ĐẦU PHIÊN</div>
-          </div>
         </div>
-      </div>
-
-      <!-- Login Form -->
-      <div class="login-container" id="loginForm" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1001;">
-        <button class="back-btn" onclick="hideLogin()" style="position: absolute; top: 15px; left: 15px; background: none; border: none; color: var(--tet-gold); cursor: pointer; font-size: 20px;">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <div class="login-header" style="text-align: center; margin-bottom: 25px;">
-          <h2 id="loginTitle" style="color: var(--tet-gold); margin-bottom: 10px;">ĐĂNG NHẬP</h2>
-          <p style="color: white; font-size: 14px;">Nhập mã kích hoạt để bắt đầu</p>
+    </div>
+    <div class="main-card">
+        <div class="header">
+            <h1>HOÀNG PHÚC 68</h1>
+            <p>Chúc mừng năm mới 2025</p>
         </div>
-        <div class="login-form" style="display: flex; flex-direction: column; gap: 20px;">
-          <div class="form-group">
-            <label style="color: var(--tet-gold); display: block; margin-bottom: 8px;">Mã Kích Hoạt (Key)</label>
-            <input type="text" id="activationKey" placeholder="Nhập mã của bạn..." style="width: 100%;">
-          </div>
-          <button class="action-btn contact-btn" id="startPredictBtn" onclick="checkKey()" style="width: 100%;">
-            KÍCH HOẠT NGAY
-          </button>
-          <div id="loginMessage" class="message" style="color: var(--tet-gold); text-align: center; font-size: 13px;"></div>
+        <div class="intro">🧧 KHAI XUÂN NHƯ Ý - ĐÁNH ĐÂU THẮNG ĐÓ 🧧</div>
+        <div class="game-grid">
+            <div class="game-item" onclick="selectGame('68banxanh')">
+                <img src="media/xanhlogo5.png" alt="Bàn Xanh">
+                <span>BÀN XANH</span>
+            </div>
+            <div class="game-item" onclick="selectGame('68gb')">
+                <img src="media/md5logo.png" alt="MD5">
+                <span>MD5</span>
+            </div>
+            <div class="game-item" onclick="selectGame('68sicbo')">
+                <img src="media/logo68.png" alt="Sicbo">
+                <span>SICBO</span>
+            </div>
+            <div class="game-item" onclick="selectGame('BCR')">
+                <img src="media/bcr.png" alt="Baccarat">
+                <span>BACCARAT</span>
+            </div>
         </div>
-        <div class="login-footer" style="text-align: center; margin-top: 20px; color: white; font-size: 13px;">
-          Chưa có mã? <a href="https://t.me/PhucTheTu3779" target="_blank" style="color: var(--tet-gold); font-weight: 700;">Mua Key Tại Đây</a>
+        <div class="actions">
+            <button class="btn btn-gold"><i class="fas fa-tags"></i> BẢNG GIÁ</button>
+            <button class="btn btn-red" onclick="window.open('https://t.me/PhucTheTu3779')"><i class="fab fa-telegram"></i> HỖ TRỢ</button>
         </div>
-      </div>
-
-      <!-- Pricing Menu -->
-      <div class="menu-container" id="pricingMenu" style="position: fixed; top: 0; right: -100%; width: 300px; height: 100%; padding: 30px; transition: 0.3s; z-index: 1002;">
-        <button class="back-btn" onclick="toggleMenu()" style="margin-bottom: 20px; background: none; border: none; color: var(--tet-gold); cursor: pointer; font-size: 20px;">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <h2 style="color: var(--tet-gold); margin-bottom: 25px; text-align: center;">BẢNG GIÁ TOOL AI</h2>
-        <div class="menu-list" style="display: flex; flex-direction: column; gap: 15px;">
-          <div class="menu-item" style="display: flex; justify-content: space-between; color: white; border-bottom: 1px solid rgba(255,207,51,0.2); padding-bottom: 10px;">
-            <span><i class="fas fa-clock"></i> Gói 1 Ngày</span>
-            <span style="color: var(--tet-gold); font-weight: 700;">50.000đ</span>
-          </div>
-          <div class="menu-item" style="display: flex; justify-content: space-between; color: white; border-bottom: 1px solid rgba(255,207,51,0.2); padding-bottom: 10px;">
-            <span><i class="fas fa-calendar-alt"></i> Gói 7 Ngày</span>
-            <span style="color: var(--tet-gold); font-weight: 700;">200.000đ</span>
-          </div>
-          <div class="menu-item" style="display: flex; justify-content: space-between; color: white; border-bottom: 1px solid rgba(255,207,51,0.2); padding-bottom: 10px;">
-            <span><i class="fas fa-star"></i> Gói 30 Ngày</span>
-            <span style="color: var(--tet-gold); font-weight: 700;">500.000đ</span>
-          </div>
-        </div>
-        <button class="action-btn contact-btn" style="margin-top: 30px; width: 100%;" onclick="window.open('https://t.me/PhucTheTu3779', '_blank')">
-          <i class="fab fa-telegram"></i> NHẮN TIN ADMIN
-        </button>
-      </div>
-
-      <iframe id="iframeGame" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; border: none; z-index: 999;"></iframe>
-      <button class="game-logout-btn" id="logoutBtn" style="display: none; position: fixed; top: 20px; right: 20px; z-index: 1000; background: var(--tet-red); border: 2px solid var(--tet-gold); color: white; width: 40px; height: 40px; border-radius: 50%; cursor: pointer;" onclick="logoutGame()">
-        <i class="fas fa-sign-out-alt"></i>
-      </button>
-
-      <script>
-        let selectedGameId = '';
-        let isPredicting = false;
-        let predictionInterval;
-        let currentDeviceId = localStorage.getItem('deviceId') || '';
-
-        function selectGame(gameId) {
-          selectedGameId = gameId;
-          document.getElementById('gameMenu').style.display = 'none';
-          document.getElementById('loginForm').style.display = 'block';
-          const titles = {
-            '68banxanh': 'BÀN XANH',
-            '68gb': 'MD5',
-            '68sicbo': 'SICBO',
-            'BCR': 'BACCARAT'
-          };
-          document.getElementById('loginTitle').innerText = titles[gameId] || 'ĐĂNG NHẬP';
+    </div>
+    <script>
+        function createIcon() {
+            const container = document.getElementById('envelopeContainer');
+            const icons = ['🧧', '🌸', '🌼', '💰', '🏮'];
+            const icon = document.createElement('div');
+            icon.className = 'falling-icon';
+            icon.innerHTML = icons[Math.floor(Math.random() * icons.length)];
+            icon.style.left = Math.random() * 100 + 'vw';
+            icon.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            icon.style.fontSize = (Math.random() * 10 + 15) + 'px';
+            container.appendChild(icon);
+            setTimeout(() => icon.remove(), 7000);
         }
-
-        function hideLogin() {
-          document.getElementById('loginForm').style.display = 'none';
-          document.getElementById('gameMenu').style.display = 'flex';
-        }
-
-        function toggleMenu() {
-          const menu = document.getElementById('pricingMenu');
-          menu.style.right = menu.style.right === '0px' ? '-100%' : '0px';
-        }
-
-        async function checkKey() {
-          const key = document.getElementById('activationKey').value.trim();
-          const msg = document.getElementById('loginMessage');
-          if (!key) { msg.innerText = 'Vui lòng nhập mã kích hoạt!'; return; }
-          try {
-            const response = await fetch(`check_key.php?key=${key}&device_id=${currentDeviceId}`);
-            const data = await response.json();
-            if (data.status === 'success') {
-              localStorage.setItem('activeKey', key);
-              localStorage.setItem('deviceId', data.device_id);
-              currentDeviceId = data.device_id;
-              startGame();
-            } else { msg.innerText = data.message; }
-          } catch (error) { msg.innerText = 'Lỗi kết nối!'; }
-        }
-
-        function startGame() {
-          const urls = {
-            '68banxanh': 'games/68gbsic.html',
-            '68gb': 'games/xanh68gb.html',
-            '68sicbo': 'games/68gbsic.html',
-            'BCR': 'games/68gbsic.html'
-          };
-          document.getElementById('loginForm').style.display = 'none';
-          const iframe = document.getElementById('iframeGame');
-          iframe.src = urls[selectedGameId];
-          iframe.style.display = 'block';
-          document.getElementById('logoutBtn').style.display = 'flex';
-          startAI();
-        }
-
-        function logoutGame() {
-          document.getElementById('iframeGame').style.display = 'none';
-          document.getElementById('logoutBtn').style.display = 'none';
-          document.getElementById('gameMenu').style.display = 'flex';
-          stopAI();
-        }
-
-        function startAI() {
-          isPredicting = true;
-          updatePrediction();
-          predictionInterval = setInterval(updatePrediction, 5000);
-        }
-
-        function stopAI() {
-          isPredicting = false;
-          clearInterval(predictionInterval);
-        }
-
-        async function updatePrediction() {
-          if (!isPredicting) return;
-          try {
-            const apiMap = {
-              '68banxanh': 'api/68hpapixanh.php',
-              '68gb': 'api/api68gb.php',
-              '68sicbo': 'api/api68sic.php',
-              'BCR': 'api/api68sic.php'
-            };
-            const response = await fetch(apiMap[selectedGameId]);
-            const data = await response.json();
-            if (data.phien) {
-              document.getElementById('line1').innerHTML = `PHIÊN: ${data.phien}`;
-              document.getElementById('line2').innerHTML = `DỰ ĐOÁN: ${data.ketqua}`;
-            }
-          } catch (e) {}
-        }
+        setInterval(createIcon, 500);
 
         let isDragging = false;
         let startX, startY, initialX, initialY;
         function dragStart(e) {
-          const touch = e.type === 'touchstart' ? e.touches[0] : e;
-          startX = touch.clientX; startY = touch.clientY;
-          const rect = document.getElementById('robotContainer').getBoundingClientRect();
-          initialX = rect.left; initialY = rect.top;
-          isDragging = true;
-          document.addEventListener('mousemove', drag);
-          document.addEventListener('mouseup', dragEnd);
-          document.addEventListener('touchmove', drag);
-          document.addEventListener('touchend', dragEnd);
+            const touch = e.type === 'touchstart' ? e.touches[0] : e;
+            startX = touch.clientX; startY = touch.clientY;
+            const rect = document.getElementById('robotContainer').getBoundingClientRect();
+            initialX = rect.left; initialY = rect.top;
+            isDragging = true;
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', dragEnd);
+            document.addEventListener('touchmove', drag);
+            document.addEventListener('touchend', dragEnd);
         }
         function drag(e) {
-          if (!isDragging) return;
-          const touch = e.type === 'touchmove' ? e.touches[0] : e;
-          const el = document.getElementById('robotContainer');
-          el.style.left = (initialX + touch.clientX - startX) + 'px';
-          el.style.top = (initialY + touch.clientY - startY) + 'px';
+            if (!isDragging) return;
+            const touch = e.type === 'touchmove' ? e.touches[0] : e;
+            const el = document.getElementById('robotContainer');
+            el.style.left = (initialX + touch.clientX - startX) + 'px';
+            el.style.top = (initialY + touch.clientY - startY) + 'px';
+            el.style.bottom = 'auto'; el.style.right = 'auto'; el.style.transform = 'none';
         }
         function dragEnd() { isDragging = false; }
-      </script>
+        
+        function selectGame(game) { alert('Đã chọn: ' + game); }
+    </script>
+</body>
 </html>

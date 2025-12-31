@@ -61,24 +61,11 @@
     .btn-facebook { background: #1e1b4b; }
     .btn-telegram { background: #059669; }
     .btn:hover { opacity: 0.9; transform: translateY(-2px); }
-    
-    #robotContainer { position: fixed; top: 50%; left: 20px; transform: translateY(-50%); z-index: 20; cursor: move; display: flex; align-items: center; background: rgba(0,0,0,0.6); padding: 5px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); }
-    #robotIcon { width: 45px; height: 45px; border-radius: 8px; }
-    #robotText { margin-left: 10px; text-align: left; }
-    #robotText div { font-size: 12px; font-weight: bold; color: #ffcf33; }
   </style>
 </head>
 <body>
     <div id="envelopeContainer"></div>
     
-    <div id="robotContainer" onmousedown="dragStart(event)" ontouchstart="dragStart(event)">
-        <img src="media/xanhlogo5.png" id="robotIcon" alt="Robot">
-        <div id="robotText">
-            <div id="line1">ĐANG CHỜ...</div>
-            <div id="line2">BẮT ĐẦU PHIÊN</div>
-        </div>
-    </div>
-
     <div class="main-container">
         <div class="header">
             <h1>HOÀNG PHÚC 68</h1>
@@ -133,29 +120,6 @@
         }
         setInterval(createIcon, 500);
 
-        let isDragging = false;
-        let startX, startY, initialX, initialY;
-        function dragStart(e) {
-            const touch = e.type === 'touchstart' ? e.touches[0] : e;
-            startX = touch.clientX; startY = touch.clientY;
-            const rect = document.getElementById('robotContainer').getBoundingClientRect();
-            initialX = rect.left; initialY = rect.top;
-            isDragging = true;
-            document.addEventListener('mousemove', drag);
-            document.addEventListener('mouseup', dragEnd);
-            document.addEventListener('touchmove', drag);
-            document.addEventListener('touchend', dragEnd);
-        }
-        function drag(e) {
-            if (!isDragging) return;
-            const touch = e.type === 'touchmove' ? e.touches[0] : e;
-            const el = document.getElementById('robotContainer');
-            el.style.left = (initialX + touch.clientX - startX) + 'px';
-            el.style.top = (initialY + touch.clientY - startY) + 'px';
-            el.style.bottom = 'auto'; el.style.right = 'auto'; el.style.transform = 'none';
-        }
-        function dragEnd() { isDragging = false; }
-        
         function selectGame(game) { alert('Đang khởi động Tool: ' + game); }
     </script>
 </body>

@@ -46,11 +46,11 @@
         .header h1 { font-size: 24px; color: var(--tet-gold); margin-bottom: 5px; }
         .header p { font-size: 12px; text-transform: uppercase; margin-bottom: 15px; }
         .intro { background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; margin-bottom: 15px; font-size: 13px; }
-        .game-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; padding: 0 10px; }
         .game-item { cursor: pointer; transition: 0.3s; }
         .game-item:hover { transform: scale(1.05); }
-        .game-item img { width: 100%; border-radius: 15px; border: 1px solid var(--tet-gold); }
-        .game-item span { display: block; margin-top: 5px; font-size: 11px; font-weight: bold; }
+        .game-item img { width: 75px; height: 75px; border-radius: 12px; border: 1px solid var(--tet-gold); display: block; margin: 0 auto; }
+        .game-item span { display: block; margin-top: 5px; font-size: 10px; font-weight: bold; }
         .actions { display: flex; gap: 10px; }
         .btn { flex: 1; padding: 10px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; font-size: 13px; color: white; display: flex; align-items: center; justify-content: center; gap: 5px; }
         .btn-gold { background: linear-gradient(to bottom, #ffd700, #b8860b); color: #4a0000; }
@@ -81,6 +81,14 @@
             <div class="game-item" onclick="selectGame('BCR')">
                 <img src="media/bcr.png" alt="Baccarat">
                 <span>BACCARAT</span>
+            </div>
+            <div class="game-item" onclick="selectGame('hitclub')">
+                <img src="https://hitclub.com/wp-content/uploads/2024/05/hit-club.webp" alt="Hit Club">
+                <span>HIT CLUB</span>
+            </div>
+            <div class="game-item" onclick="selectGame('sunwin')">
+                <img src="https://sunwin.games/wp-content/uploads/2023/12/logo-sunwin.png" alt="Sun Win">
+                <span>SUN WIN</span>
             </div>
         </div>
         <div class="actions">

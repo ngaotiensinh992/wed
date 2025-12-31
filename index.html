@@ -43,9 +43,39 @@
             z-index: 10;
             box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
-        .header h1 { font-size: 24px; color: var(--tet-gold); margin-bottom: 5px; }
-        .header p { font-size: 12px; text-transform: uppercase; margin-bottom: 15px; }
-        .intro { background: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px; margin-bottom: 15px; font-size: 13px; }
+        .header h1 { 
+            font-size: 32px; 
+            font-weight: 800; 
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #d946ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+        .header p { font-size: 14px; color: #cbd5e1; margin-bottom: 15px; }
+        .tagline { 
+            font-size: 16px; 
+            font-weight: 700; 
+            margin-bottom: 15px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 8px;
+            color: white;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .tagline::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #d946ef);
+            border-radius: 2px;
+        }
+        .developer-info { font-size: 14px; color: #cbd5e1; margin-bottom: 25px; }
         .game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; padding: 0 10px; }
         .game-item { cursor: pointer; transition: 0.3s; position: relative; padding-bottom: 15px; }
         .game-item:hover { transform: scale(1.05); }
@@ -83,9 +113,10 @@
     <div class="main-card">
         <div class="header">
             <h1>HOÀNG PHÚC 68</h1>
-            <p>CHÚC MỪNG NĂM MỚI 2025</p>
+            <p>Chào mừng đến với TOOL AI HOÀNG PHÚC</p>
         </div>
-        <div class="intro">🧧 KHAI XUÂN NHƯ Ý - ĐÁNH ĐÂU THẮNG ĐÓ 🧧</div>
+        <div class="tagline">⚡ CÔNG CỤ HỖ TRỢ CHƠI GAME CHÍNH XÁC NHẤT ⚡</div>
+        <div class="developer-info">AI Được Phát Triển Bởi Hoàng Phúc</div>
         <div class="game-grid">
             <div class="game-item" onclick="selectGame('68banxanh')">
                 <div class="icon-wrapper"><img src="media/xanhlogo5.png" alt="Bàn Xanh"></div>

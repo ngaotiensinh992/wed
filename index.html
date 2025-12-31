@@ -46,15 +46,20 @@
         .header h1 { 
             font-size: 32px; 
             font-weight: 800; 
-            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #d946ef);
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #d946ef, #3b82f6);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 5px;
-            animation: tetGlow 2s ease-in-out infinite alternate;
+            animation: shine 3s linear infinite, tetGlow 2s ease-in-out infinite alternate;
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+        }
+        @keyframes shine {
+            to { background-position: 200% center; }
         }
         @keyframes tetGlow {
-            from { transform: scale(1); }
-            to { transform: scale(1.02); }
+            from { transform: scale(1); filter: brightness(1); }
+            to { transform: scale(1.02); filter: brightness(1.2); }
         }
         .header p { font-size: 14px; color: #cbd5e1; margin-bottom: 15px; }
         .tagline { 

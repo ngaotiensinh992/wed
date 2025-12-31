@@ -1,6 +1,15 @@
 <?php
 $referer = $_SERVER['HTTP_REFERER'] ?? '';
-if (strpos($referer, 'hoangphuc68.site') === false) {
+$host = $_SERVER['HTTP_HOST'] ?? '';
+$allowedDomains = ['hoangphuc68.site', 'replit.dev', 'replit.app', 'repl.co', 'localhost'];
+$isAllowed = false;
+foreach ($allowedDomains as $domain) {
+    if (strpos($referer, $domain) !== false || strpos($host, $domain) !== false) {
+        $isAllowed = true;
+        break;
+    }
+}
+if (!$isAllowed && !empty($referer)) {
     echo json_encode(['status' => 'error', 'message' => 'Access denied']);
     exit;
 }

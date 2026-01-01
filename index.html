@@ -6,7 +6,7 @@
     <title>Hoàng Phúc 68 - Chúc Mừng Năm Mới 2025</title>
     <link rel="icon" href="https://i.postimg.cc/ZnNdvPzf/wedicon.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --tet-red: #d90429;
@@ -33,157 +33,85 @@
             100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
         .main-card {
-            background: rgba(30, 0, 0, 0.75);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 207, 51, 0.3);
-            border-radius: 28px;
-            width: 360px;
-            padding: 30px 20px;
+            background: rgba(40, 0, 0, 0.8);
+            border: 2px solid var(--tet-gold);
+            border-radius: 20px;
+            width: 340px;
+            padding: 20px;
             text-align: center;
             color: white;
             z-index: 10;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6), 
-                        inset 0 0 20px rgba(255, 207, 51, 0.05);
-            animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
         .header h1 { 
-            font-size: 34px; 
-            font-weight: 900; 
-            background: linear-gradient(90deg, #ffcc00, #ff3333, #ffcc00);
-            background-size: 200% auto;
+            font-size: 32px; 
+            font-weight: 800; 
+            background: linear-gradient(to bottom, #fff7ad 0%, #ffa700 50%, #ff5e00 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
-            animation: shine 4s linear infinite, tetGlow 2.5s ease-in-out infinite alternate;
-            text-shadow: 0 5px 15px rgba(255, 0, 0, 0.2);
-            -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.1);
-            letter-spacing: -1px;
-        }
-        @keyframes shine {
-            to { background-position: 200% center; }
+            margin-bottom: 5px;
+            animation: tetGlow 2s ease-in-out infinite alternate;
+            filter: drop-shadow(0 0 5px rgba(255, 207, 51, 0.5));
         }
         @keyframes tetGlow {
-            from { transform: scale(1); filter: brightness(1); }
-            to { transform: scale(1.02); filter: brightness(1.2); }
+            from { filter: drop-shadow(0 0 5px rgba(255, 207, 51, 0.5)); transform: scale(1); }
+            to { filter: drop-shadow(0 0 15px rgba(255, 207, 51, 0.8)); transform: scale(1.02); }
         }
-        .header p { 
-            font-size: 13px; 
-            color: rgba(255, 255, 255, 0.7); 
-            margin-bottom: 20px; 
-            letter-spacing: 2px;
-            font-weight: 500;
-        }
+        .header p { font-size: 14px; color: #cbd5e1; margin-bottom: 15px; }
         .tagline { 
-            font-size: 14px; 
+            font-size: 16px; 
             font-weight: 700; 
-            margin-bottom: 20px; 
+            margin-bottom: 15px; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            gap: 10px;
-            color: #ffcf33;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 8px 15px;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 207, 51, 0.1);
+            gap: 8px;
+            color: white;
+            position: relative;
+            padding-bottom: 10px;
         }
-        .developer-info { font-size: 12px; color: rgba(255, 255, 255, 0.5); margin-bottom: 25px; }
-        
-        .game-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 15px; 
-            margin-bottom: 25px; 
-            padding: 0 5px; 
+        .tagline::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #d946ef);
+            border-radius: 2px;
         }
-        .game-item { 
-            cursor: pointer; 
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); 
-            position: relative; 
-            padding-bottom: 20px; 
-        }
-        .game-item:hover { transform: translateY(-8px); }
+        .developer-info { font-size: 14px; color: #cbd5e1; margin-bottom: 25px; }
+        .game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; padding: 0 10px; }
+        .game-item { cursor: pointer; transition: 0.3s; position: relative; padding-bottom: 15px; }
+        .game-item:hover { transform: scale(1.05); }
         .game-item .icon-wrapper { 
-            background: linear-gradient(145deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
-            padding: 12px; 
-            border-radius: 22px; 
-            display: inline-block;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-        }
-        .game-item:hover .icon-wrapper {
-            border-color: rgba(255, 207, 51, 0.5);
-            box-shadow: 0 15px 30px rgba(255, 207, 51, 0.2);
-            background: rgba(255, 207, 51, 0.05);
-        }
-        .game-item img { 
-            width: 80px; 
-            height: 80px; 
+            background: rgba(0, 0, 0, 0.4); 
+            padding: 10px; 
             border-radius: 18px; 
-            display: block; 
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+            display: inline-block;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
+        .game-item img { width: 85px; height: 85px; border-radius: 15px; border: 2px solid var(--tet-gold); display: block; }
         .game-item span { 
             position: absolute; 
-            bottom: 8px; 
+            bottom: 5px; 
             left: 50%; 
             transform: translateX(-50%); 
-            background: linear-gradient(135deg, #d90429, #800000); 
+            background: var(--tet-red); 
             color: white; 
-            font-size: 9px; 
+            font-size: 10px; 
             font-weight: 800; 
-            padding: 4px 12px; 
-            border-radius: 20px; 
-            border: 1px solid rgba(255, 207, 51, 0.6);
+            padding: 3px 10px; 
+            border-radius: 8px; 
+            border: 1px solid var(--tet-gold);
             white-space: nowrap;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
-        .game-item:hover span {
-            background: linear-gradient(135deg, #ffcf33, #ffa700);
-            color: #4a0000;
-            border-color: white;
-            transform: translateX(-50%) translateY(-2px);
-        }
-        .actions { display: flex; gap: 12px; padding: 0 5px; }
-        .btn { 
-            flex: 1; 
-            padding: 14px; 
-            border-radius: 16px; 
-            border: none; 
-            font-weight: 800; 
-            cursor: pointer; 
-            font-size: 14px; 
-            color: white; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 10px; 
-            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .btn-facebook { 
-            background: linear-gradient(135deg, #1877f2, #0051b3); 
-            box-shadow: 0 6px 20px rgba(24, 119, 242, 0.3);
-        }
-        .btn-telegram { 
-            background: linear-gradient(135deg, #0088cc, #006699); 
-            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.3);
-        }
-        .btn:hover { 
-            transform: translateY(-4px); 
-            filter: brightness(1.1);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
-        }
-        .btn:active { transform: translateY(0); }
+        .actions { display: flex; gap: 10px; }
+        .btn { flex: 1; padding: 10px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; font-size: 13px; color: white; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .btn-facebook { background: #1e1b4b; }
+        .btn-telegram { background: #059669; }
     </style>
 </head>
 <body>
@@ -240,7 +168,7 @@
             setTimeout(() => icon.remove(), 7000);
         }
         setInterval(createIcon, 500);
-        function selectGame(game) { alert('Đang khởi động Tool: ' + game); }
+        function selectGame(game) { alert('Đã chọn: ' + game); }
     </script>
 </body>
 </html>

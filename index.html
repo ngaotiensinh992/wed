@@ -71,6 +71,20 @@
             color: rgba(255, 255, 255, 0.7); 
             font-weight: 300;
         }
+        .rainbow-divider {
+            height: 1.5px;
+            width: 65%;
+            margin: 15px auto;
+            background: linear-gradient(90deg, 
+                #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff);
+            background-size: 200% auto;
+            border-radius: 2px;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+            animation: dividerShimmer 4s linear infinite;
+        }
+        @keyframes dividerShimmer {
+            to { background-position: 200% center; }
+        }
         .intro-section p {
             font-size: 14px;
             color: rgba(255, 255, 255, 0.9);
@@ -119,6 +133,7 @@
             <h1>HOÀNG PHÚC 68</h1>
             <p>Chào mừng đến với TOOL AI HOÀNG PHÚC</p>
         </div>
+        <div class="rainbow-divider"></div>
         <div class="intro-section">
             <p>⚡ CÔNG CỤ HỖ TRỢ CHƠI GAME CHÍNH XÁC NHẤT ⚡</p>
             <p>AI Được Phát Triển Bởi Hoàng Phúc</p>

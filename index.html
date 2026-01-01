@@ -25,7 +25,21 @@
             position: relative;
         }
         #envelopeContainer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
-        .falling-icon { position: absolute; animation: fall linear infinite; }
+        .falling-icon { position: absolute; animation: fall linear infinite; z-index: 6; }
+        .bubble {
+            position: fixed;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            animation: moveBubble linear infinite;
+        }
+        @keyframes moveBubble {
+            0% { transform: translateY(110vh) translateX(0); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
+        }
         @keyframes fall {
             0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
             10% { opacity: 1; }
@@ -173,6 +187,20 @@
             setTimeout(() => icon.remove(), 7000);
         }
         setInterval(createIcon, 500);
+
+        function createBubble() {
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            const size = Math.random() * 60 + 20 + 'px';
+            bubble.style.width = size;
+            bubble.style.height = size;
+            bubble.style.left = Math.random() * 100 + 'vw';
+            bubble.style.animationDuration = Math.random() * 5 + 5 + 's';
+            document.body.appendChild(bubble);
+            setTimeout(() => bubble.remove(), 10000);
+        }
+        setInterval(createBubble, 1000);
+
         function selectGame(game) { alert('Đã chọn: ' + game); }
     </script>
 </body>

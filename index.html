@@ -82,7 +82,11 @@
             display: inline-block;
             text-transform: uppercase;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            animation: softPulse 3s ease-in-out infinite alternate;
+            animation: softPulse 3s ease-in-out infinite alternate, badgeGlow 2s ease-in-out infinite alternate;
+        }
+        @keyframes badgeGlow {
+            from { box-shadow: 0 4px 15px rgba(0,0,0,0.3), 0 0 5px rgba(217, 4, 41, 0.5); }
+            to { box-shadow: 0 4px 20px rgba(255, 207, 51, 0.6), 0 0 20px rgba(255, 207, 51, 0.4); }
         }
         @keyframes softPulse {
             from { opacity: 0.8; transform: scale(1); }

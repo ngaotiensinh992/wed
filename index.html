@@ -33,12 +33,14 @@
             pointer-events: none;
             z-index: 1;
             animation: moveBubble linear infinite;
+            filter: blur(1px);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
         @keyframes moveBubble {
-            0% { transform: translateY(110vh) translateX(0); opacity: 0; }
-            10% { opacity: 0.5; }
-            90% { opacity: 0.5; }
-            100% { transform: translateY(-10vh) translateX(50px); opacity: 0; }
+            0% { transform: translateY(110vh) translateX(0) scale(0.5); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) translateX(100px) scale(1.2); opacity: 0; }
         }
         @keyframes fall {
             0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
@@ -191,15 +193,16 @@
         function createBubble() {
             const bubble = document.createElement('div');
             bubble.className = 'bubble';
-            const size = Math.random() * 60 + 20 + 'px';
+            const size = Math.random() * 40 + 10 + 'px';
             bubble.style.width = size;
             bubble.style.height = size;
             bubble.style.left = Math.random() * 100 + 'vw';
-            bubble.style.animationDuration = Math.random() * 5 + 5 + 's';
+            bubble.style.animationDuration = Math.random() * 8 + 7 + 's';
+            bubble.style.opacity = Math.random() * 0.5 + 0.3;
             document.body.appendChild(bubble);
-            setTimeout(() => bubble.remove(), 10000);
+            setTimeout(() => bubble.remove(), 15000);
         }
-        setInterval(createBubble, 1000);
+        setInterval(createBubble, 400);
 
         function selectGame(game) { alert('Đã chọn: ' + game); }
     </script>

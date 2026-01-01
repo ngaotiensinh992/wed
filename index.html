@@ -58,12 +58,13 @@
             font-weight: 700;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            background: linear-gradient(180deg, #ffdf8e 0%, #d4af37 50%, #b8860b 100%);
+            background: linear-gradient(180deg, #fceabb 0%, #f8b500 50%, #fceabb 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 8px;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
             position: relative;
+            text-shadow: 0 0 10px rgba(248, 181, 0, 0.2);
         }
         .header p { 
             font-size: 14px; 
@@ -71,6 +72,7 @@
             letter-spacing: 0.5px;
             margin-bottom: 20px;
             font-weight: 400;
+            line-height: 1.5;
         }
         .tagline { 
             font-size: 14px; 
@@ -80,14 +82,15 @@
             align-items: center; 
             justify-content: center; 
             gap: 8px;
-            color: #ffdf8e;
+            color: #f8b500;
             letter-spacing: 0.8px;
             text-transform: uppercase;
             animation: shimmer 3s infinite linear;
-            background: linear-gradient(90deg, #ffdf8e 0%, #ffffff 50%, #ffdf8e 100%);
+            background: linear-gradient(90deg, #f8b500 0%, #ffffff 50%, #f8b500 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            line-height: 1.4;
         }
         @keyframes shimmer {
             to { background-position: 200% center; }
@@ -99,6 +102,7 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
             font-weight: 500;
+            line-height: 1.2;
         }
         .game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; padding: 0 10px; }
         .game-item { cursor: pointer; transition: 0.3s; position: relative; padding-bottom: 15px; }

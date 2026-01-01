@@ -53,56 +53,31 @@
             z-index: 10;
             box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
-        .header h1 { 
-            font-size: 32px; 
+        .header-box h1 { 
+            font-size: 24px; 
             font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            background: linear-gradient(180deg, #fceabb 0%, #f8b500 50%, #fceabb 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-            position: relative;
-            text-shadow: 0 0 10px rgba(248, 181, 0, 0.2);
-        }
-        .header p { 
-            font-size: 14px; 
-            color: rgba(255, 255, 255, 0.7); 
-            letter-spacing: 0.5px;
-            margin-bottom: 20px;
-            font-weight: 400;
-            line-height: 1.5;
-        }
-        .tagline { 
-            font-size: 14px; 
-            font-weight: 600; 
-            margin-bottom: 15px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 8px;
-            color: #f8b500;
-            letter-spacing: 0.8px;
-            text-transform: uppercase;
-            animation: shimmer 3s infinite linear;
-            background: linear-gradient(90deg, #f8b500 0%, #ffffff 50%, #f8b500 100%);
+            margin-bottom: 5px;
+            background: linear-gradient(90deg, #ff00cc, #3333ff, #00ccff);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            line-height: 1.4;
+            animation: neonGlow 3s linear infinite;
         }
-        @keyframes shimmer {
+        @keyframes neonGlow {
             to { background-position: 200% center; }
         }
-        .developer-info { 
+        .header-box p { 
             font-size: 12px; 
-            color: rgba(255, 255, 255, 0.5); 
-            margin-bottom: 25px; 
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.7); 
+            font-weight: 300;
+        }
+        .intro-section p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
+            margin-bottom: 15px;
             font-weight: 500;
-            line-height: 1.2;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
         .game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; padding: 0 10px; }
         .game-item { cursor: pointer; transition: 0.3s; position: relative; padding-bottom: 15px; }
@@ -140,12 +115,14 @@
     <div id="envelopeContainer"></div>
     <canvas id="particleCanvas"></canvas>
     <div class="main-card">
-        <div class="header">
+        <div class="header-box">
             <h1>HOÀNG PHÚC 68</h1>
             <p>Chào mừng đến với TOOL AI HOÀNG PHÚC</p>
         </div>
-        <div class="tagline">⚡ CÔNG CỤ HỖ TRỢ CHƠI GAME CHÍNH XÁC NHẤT ⚡</div>
-        <div class="developer-info">AI Được Phát Triển Bởi Hoàng Phúc</div>
+        <div class="intro-section">
+            <p>⚡ CÔNG CỤ HỖ TRỢ CHƠI GAME CHÍNH XÁC NHẤT ⚡</p>
+            <p>AI Được Phát Triển Bởi Hoàng Phúc</p>
+        </div>
         <div class="game-grid">
             <div class="game-item" onclick="selectGame('68banxanh')">
                 <div class="icon-wrapper"><img src="media/xanhlogo5.png" alt="Bàn Xanh"></div>

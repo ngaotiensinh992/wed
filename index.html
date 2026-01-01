@@ -157,6 +157,84 @@
         .btn { flex: 1; padding: 10px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; font-size: 13px; color: white; display: flex; align-items: center; justify-content: center; gap: 5px; }
         .btn-facebook { background: #3b82f6; }
         .btn-telegram { background: #059669; }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #0a0a0a;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .back-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+        .modal-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            flex: 1;
+            text-align: center;
+            margin-right: 35px;
+        }
+        .contact-list {
+            list-style: none;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .contact-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: white;
+            font-weight: 600;
+        }
+        .contact-left i {
+            width: 20px;
+            text-align: center;
+        }
+        .contact-right a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .modal-footer-text {
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            text-align: center;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
@@ -199,10 +277,50 @@
             </div>
         </div>
         <div class="actions">
-            <button class="btn btn-facebook" onclick="window.open('https://facebook.com/hphucthetu3779')"><i class="fab fa-facebook"></i> Facebook</button>
+            <button class="btn btn-facebook" onclick="openModal()"><i class="fab fa-facebook"></i> Facebook</button>
             <button class="btn btn-telegram" onclick="window.open('https://t.me/PhucTheTu3779')"><i class="fab fa-telegram"></i> Telegram</button>
         </div>
     </div>
+
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="back-btn" onclick="closeModal()"><i class="fas fa-arrow-left"></i></button>
+                <div class="modal-title">Thông Tin Liên Hệ</div>
+            </div>
+            <div class="contact-list">
+                <div class="contact-item">
+                    <div class="contact-left">
+                        <i class="fab fa-telegram"></i> Telegram
+                    </div>
+                    <div class="contact-right">
+                        <a href="https://t.me/PhucTheTu3779">Ấn Vào Đây</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-left">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </div>
+                    <div class="contact-right">
+                        <a href="https://facebook.com/hphucthetu3779">Ấn Vào Đây</a>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-left">
+                        <i class="fas fa-phone-alt"></i> Zalo
+                    </div>
+                    <div class="contact-right">
+                        <a href="https://zalo.me/0377953779">Ấn Vào Đây</a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer-text">
+                Anh Em Cần Key Để Test Tool Liên Hệ TeleGram<br>
+                @PhucTheTu3779
+            </div>
+        </div>
+    </div>
+
     <script>
         function createIcon() {
             const container = document.getElementById('envelopeContainer');
@@ -218,6 +336,13 @@
         }
         setInterval(createIcon, 500);
         function selectGame(game) { alert('Đã chọn: ' + game); }
+
+        function openModal() {
+            document.getElementById('contactModal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('contactModal').style.display = 'none';
+        }
 
         // Particle Effect
         const canvas = document.getElementById('particleCanvas');

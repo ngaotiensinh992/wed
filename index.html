@@ -25,52 +25,24 @@
             position: relative;
         }
         #envelopeContainer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
-        .falling-icon { position: absolute; animation: fall linear infinite; z-index: 6; }
-        .bubble {
-            position: fixed;
-            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1;
-            animation: moveBubble linear infinite;
-            filter: blur(1px);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-        @keyframes moveBubble {
-            0% { transform: translateY(110vh) translateX(0) scale(0.5); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) translateX(100px) scale(1.2); opacity: 0; }
-        }
+        .falling-icon { position: absolute; animation: fall linear infinite; }
         @keyframes fall {
             0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
             10% { opacity: 1; }
             90% { opacity: 1; }
             100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
-        #particleCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
         .main-card {
-            background: rgba(40, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 207, 51, 0.3);
+            background: rgba(40, 0, 0, 0.8);
+            border: 2px solid var(--tet-gold);
             border-radius: 20px;
             width: 340px;
             padding: 20px;
             text-align: center;
             color: white;
             z-index: 10;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
-        .bubble { display: none; }
         .header h1 { 
             font-size: 32px; 
             font-weight: 800; 
@@ -148,7 +120,6 @@
     </style>
 </head>
 <body>
-    <canvas id="particleCanvas"></canvas>
     <div id="envelopeContainer"></div>
     <div class="main-card">
         <div class="header">
@@ -189,72 +160,6 @@
         </div>
     </div>
     <script>
-        // Particle Background Canvas
-        const canvas = document.getElementById('particleCanvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        class Particle {
-            constructor() {
-                this.init();
-            }
-            init() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = (Math.random() - 0.5) * 1.5;
-                this.speedY = (Math.random() - 0.5) * 1.5;
-                this.opacity = Math.random() * 0.5 + 0.2;
-                this.color = `rgba(255, 255, 255, ${this.opacity})`;
-                this.glow = Math.random() > 0.5;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = this.color;
-                if (this.glow) {
-                    ctx.shadowBlur = 10;
-                    ctx.shadowColor = 'white';
-                } else {
-                    ctx.shadowBlur = 0;
-                }
-                ctx.fill();
-            }
-        }
-
-        function initParticles() {
-            particles = [];
-            const count = Math.min(Math.floor(window.innerWidth / 10), 100);
-            for (let i = 0; i < count; i++) {
-                particles.push(new Particle());
-            }
-        }
-        initParticles();
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
-
         function createIcon() {
             const container = document.getElementById('envelopeContainer');
             const icons = ['🧧', '🌸', '🌼', '💰', '🏮', '✨', '🎋'];
@@ -268,21 +173,6 @@
             setTimeout(() => icon.remove(), 7000);
         }
         setInterval(createIcon, 500);
-
-        function createBubble() {
-            const bubble = document.createElement('div');
-            bubble.className = 'bubble';
-            const size = Math.random() * 40 + 10 + 'px';
-            bubble.style.width = size;
-            bubble.style.height = size;
-            bubble.style.left = Math.random() * 100 + 'vw';
-            bubble.style.animationDuration = Math.random() * 8 + 7 + 's';
-            bubble.style.opacity = Math.random() * 0.5 + 0.3;
-            document.body.appendChild(bubble);
-            setTimeout(() => bubble.remove(), 15000);
-        }
-        // setInterval(createBubble, 400);
-
         function selectGame(game) { alert('Đã chọn: ' + game); }
     </script>
 </body>

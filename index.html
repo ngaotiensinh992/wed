@@ -170,6 +170,12 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal.active {
+            display: flex;
+            opacity: 1;
         }
         .modal-content {
             background: #0a0a0a;
@@ -179,6 +185,11 @@
             padding: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
+            transform: scale(0.7);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .modal.active .modal-content {
+            transform: scale(1);
         }
         .modal-header {
             display: flex;
@@ -338,10 +349,18 @@
         function selectGame(game) { alert('Đã chọn: ' + game); }
 
         function openModal() {
-            document.getElementById('contactModal').style.display = 'flex';
+            const modal = document.getElementById('contactModal');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
         }
         function closeModal() {
-            document.getElementById('contactModal').style.display = 'none';
+            const modal = document.getElementById('contactModal');
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
         }
 
         // Particle Effect
